@@ -1,0 +1,14 @@
+﻿<Window x:Class="P16Admintool.Views.ReleaseVersionWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:P16Admintool.Views"
+        mc:Ignorable="d"
+        Title="ReleaseVersionWindow"
+        Height="300"
+        Width="500">
+    <Grid>
+        
+    </Grid>
+</Window>

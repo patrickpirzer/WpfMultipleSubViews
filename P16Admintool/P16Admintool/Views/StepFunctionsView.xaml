@@ -1,0 +1,132 @@
+﻿<UserControl x:Class="P16Admintool.Views.StepFunctionsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
+             xmlns:winformchart="clr-namespace:System.Windows.Forms.DataVisualization.Charting;assembly=System.Windows.Forms.DataVisualization"
+             xmlns:local="clr-namespace:P16Admintool.Views"
+             xmlns:converters="clr-namespace:P16ConverterLibrary;assembly=P16ConverterLibrary"
+             mc:Ignorable="d" 
+             d:DesignHeight="600"
+             d:DesignWidth="800"
+             Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+        <!--Reference to the class DecimalConverter-->
+        <converters:DecimalConverter x:Key="decimalconverter"/>
+        <!--Common control style-->
+        <Style x:Key="commonControlStyle">
+            <Setter Property="Control.Margin" Value="5"/>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid x:Name="maingrid">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0"
+                Grid.Column="0"
+                BorderThickness="1"
+                BorderBrush="#FF000000"
+                Style="{StaticResource commonControlStyle}">
+            <TextBlock Text="Wertzuweisungen"
+                       TextAlignment="Center"
+                       Style="{StaticResource commonControlStyle}"/>
+        </Border>
+
+        <!--DataGrid for insert and update of step function data-->
+        <DataGrid x:Name="grd_stepdata"
+                  Grid.Row="1"
+                  Grid.Column="0"
+                  AutoGenerateColumns="False"
+                  CanUserAddRows="True"
+                  CanUserDeleteRows="True"
+                  SelectionUnit="FullRow"
+                  RowEditEnding="grd_stepdata_RowEditEnding"
+                  CellEditEnding="grd_stepdata_CellEditEnding"
+                  PreviewKeyDown="grd_stepdata_PreviewKeyDown"
+                  AddingNewItem="grd_stepdata_AddingNewItem"
+                  BeginningEdit="grd_stepdata_BeginningEdit"
+                  ItemsSource="{Binding StepDataSource, NotifyOnSourceUpdated=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                  Style="{StaticResource commonControlStyle}">
+            <DataGrid.Columns>
+                <!--Lower comparer (using an ObservableCollection of type ArithmeticSignData with key and value as source)
+                    Attention!
+                    The property SelectedLowerComparer is part of the class StepData (which in turn is part of StepDataSource - the source of the
+                    datagrid).
+                    So it's possible to bind the SelectedItemBinding directly to the property.
+                    Because the source LowerComparerItems for the comboboxitems is part of MainWindowViewModel and not of StepData a
+                    reference with "DataContext" is needed for the binding of the ItemsSource.-->
+                <DataGridComboBoxColumn x:Name="cbc_LowerComparer"
+                                        SelectedItemBinding="{Binding SelectedLowerComparer, NotifyOnSourceUpdated=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        DisplayMemberPath="ArithmeticSignValue"
+                                        Header=" "
+                                        Width="30">
+                    <DataGridComboBoxColumn.ElementStyle>
+                        <Style TargetType="ComboBox">
+                            <Setter Property="ItemsSource" Value="{Binding Path=DataContext.LowerComparerItems, RelativeSource={RelativeSource AncestorType=DataGrid}}" />
+                        </Style>
+                    </DataGridComboBoxColumn.ElementStyle>
+                    <DataGridComboBoxColumn.EditingElementStyle>
+                        <Style TargetType="ComboBox">
+                            <Setter Property="ItemsSource" Value="{Binding Path=DataContext.LowerComparerItems, RelativeSource={RelativeSource AncestorType=DataGrid}}" />
+                            <Setter Property="IsEditable" Value="True"/>
+                        </Style>
+                    </DataGridComboBoxColumn.EditingElementStyle>
+                </DataGridComboBoxColumn>
+
+                <!--Lower bound-->
+                <DataGridTextColumn x:Name="col_LowerBound"
+                                    Binding="{Binding LowerBound, NotifyOnTargetUpdated=True, Mode=TwoWay, UpdateSourceTrigger=LostFocus, Converter={StaticResource decimalconverter}}"
+                                    Header="Untere Grenze"/>
+                <!--Step value-->
+                <DataGridTextColumn x:Name="col_StepValue"
+                                    Binding="{Binding StepValue, NotifyOnTargetUpdated=True, Mode=TwoWay, UpdateSourceTrigger=LostFocus, Converter={StaticResource decimalconverter}}"
+                                    Header="zugewiesener Wert"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Border Grid.Row="0"
+                Grid.Column="1"
+                BorderThickness="1"
+                BorderBrush="#FF000000"
+                Style="{StaticResource commonControlStyle}">
+            <TextBlock Text="Graphische Darstellung"
+                       TextAlignment="Center"
+                       Style="{StaticResource commonControlStyle}"/>
+        </Border>
+
+        <!--Chart for displaying the step function data-->
+        <WindowsFormsHost x:Name="host"
+                          Grid.Row="1"
+                          Grid.Column="1"
+                          Style="{StaticResource commonControlStyle}">
+            <!--<winformchart:Chart x:Name="myWinformChart"
+                                Dock="Fill">
+                <winformchart:Chart.Series>
+                    <winformchart:Series Name="series" ChartType="Line"/>
+                </winformchart:Chart.Series>
+                <winformchart:Chart.ChartAreas>
+                    <winformchart:ChartArea/>
+                </winformchart:Chart.ChartAreas>
+            </winformchart:Chart>-->
+        </WindowsFormsHost>
+
+        <!--Closes the view-->
+        <Button x:Name="btn_close"
+                Grid.Row="2"
+                Grid.Column="1"
+                Margin="5"
+                Click="btn_close_Click"
+                Content="{Binding TextBtnClose, FallbackValue='Schliessen'}"/>
+
+    </Grid>
+</UserControl>

@@ -1,0 +1,93 @@
+﻿<UserControl x:Class="P16Admintool.Views.InputMasksView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:P16Admintool.Views"
+             mc:Ignorable="d"
+             d:DesignHeight="400"
+             d:DesignWidth="600">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+
+        <!--DataGrid with the list of existing input masks-->
+        <DataGrid x:Name="grd_inputmaskslist"
+                  Grid.Row="0"
+                  Grid.Column="0"
+                  Margin="5"></DataGrid>
+
+        <!--Panel for designing input masks-->
+        <Grid x:Name="grd_maskdesignerpanel"
+              Grid.Row="0"
+              Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="3*"/>
+            </Grid.RowDefinitions>
+
+            <!--Panel with the toolbox-->
+            <WrapPanel x:Name="toolbox"
+                   Grid.Row="0"
+                   Grid.Column="0"
+                   Background="Azure">
+                <Button x:Name="btn_AddLabel"
+                        Margin="5"
+                        Click="btn_AddLabel_Click"
+                        Content="{Binding TextBtnAddLabel, FallbackValue='Beschriftung'}"/>
+                <Button x:Name="btn_AddNumericField"
+                        Margin="5"
+                        Click="btn_AddNumericField_Click"
+                        Content="{Binding TextBtnAddNumericField, FallbackValue='Num. Feld'}"/>
+                <Button x:Name="btn_AddTextField"
+                        Margin="5"
+                        Click="btn_AddTextField_Click"
+                        Content="{Binding TextBtnAddTextField, FallbackValue='Textfeld'}"/>
+                <Button x:Name="btn_AddDropDownList"
+                        Margin="5"
+                        Click="btn_AddDropDownList_Click"
+                        Content="{Binding TextBtnAddDropDownList, FallbackValue='Aufzählung'}"/>
+                <Button x:Name="btn_abort"
+                        Margin="5"
+                        Click="btn_abort_Click"
+                        Content="{Binding TextBtnAbort, FallbackValue='Abbrechen'}"/>
+            </WrapPanel>
+
+            <!--Important! The background of this panel has to be "Transparent" so that drag'n'drop-events can work.
+            Otherwise the events are not fired.-->
+            <Canvas x:Name="designerpanel"
+                Grid.Row="1"
+                Grid.Column="0"
+                AllowDrop="True"
+                MouseEnter="designerpanel_MouseEnter"
+                MouseLeave="designerpanel_MouseLeave"
+                MouseDown="designerpanel_MouseDown"
+                MouseMove="designerpanel_MouseMove">
+                <Canvas.Background>
+                    <ImageBrush ImageSource="../pictures/CanvasBackground.png"
+                            TileMode="Tile"
+                            Stretch="None"
+                            Viewport="0, 0, 10, 10"
+                            ViewportUnits="Absolute" />
+                </Canvas.Background>
+            </Canvas>
+        </Grid>
+
+        <!--Closes the view-->
+        <Button x:Name="btn_close"
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="5"
+                Click="btn_close_Click"
+                Content="{Binding TextBtnClose, FallbackValue='Schliessen'}"/>
+    </Grid>
+</UserControl>

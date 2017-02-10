@@ -1,0 +1,98 @@
+﻿<Window x:Class="P16Admintool.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:P16Admintool"
+        mc:Ignorable="d"
+        Title="{Binding TitleMainWindow, FallbackValue='Stammdatenverwaltung'}"
+        Height="600"
+        Width="800">
+
+    <Grid x:Name="grd_mainpanel">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <!--The menu-->
+        <Menu x:Name="mainmenu"
+              Grid.Row="0"
+              Grid.Column="0"
+              Margin="5">
+            <!--Menu 'Program'-->
+            <MenuItem x:Name="mi_program"
+                      Header="{Binding TextMenuProgram, FallbackValue='Programm'}">
+                <MenuItem x:Name="mi_languageSelection"
+                          IsEnabled="{Binding ProgramMenuItemsEnabled, NotifyOnSourceUpdated=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          Header="{Binding TextMenuitemLanguageSelection, FallbackValue='Sprachwahl'}"
+                          Click="mi_languageSelection_Click"/>
+                <MenuItem x:Name="mi_releaseVersion"
+                          IsEnabled="{Binding ProgramMenuItemsEnabled, NotifyOnSourceUpdated=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          Header="{Binding TextMenuitemReleaseVersion, FallbackValue='Freigabe / Version'}"
+                          Click="mi_releaseVersion_Click"/>
+                <MenuItem x:Name="mi_textMaintenence"
+                          Header="{Binding TextMenuitemTextMaintenance, FallbackValue='Textpflege'}"
+                          Click="mi_textMaintenence_Click"/>
+                <Separator/>
+                <MenuItem x:Name="mi_exit"
+                          Header="{Binding TextMenuitemExit, FallbackValue='Beenden'}"
+                          Click="mi_exit_Click"/>
+            </MenuItem>
+            <!--Menu 'Master data'-->
+            <MenuItem x:Name="mi_masterdata"
+                      Header="{Binding TextMenuitemMasterData, FallbackValue='Stammdaten'}">
+                <MenuItem x:Name="mi_componentKinds"
+                          Header="{Binding TextMenuitemComponentKinds, FallbackValue='Komponentenarten'}"
+                          Click="mi_componentKinds_Click"/>
+                <MenuItem x:Name="mi_componentGroups"
+                          Header="{Binding TextMenuitemComponentGroups, FallbackValue='Komponentengruppen'}"
+                          Click="mi_componentGroups_Click"/>
+                <MenuItem x:Name="mi_systemTypes"
+                          Header="{Binding TextMenuitemSystemTypes, FallbackValue='Anlagenarten'}"
+                          Click="mi_systemTypes_Click"/>
+                <Separator/>
+                <MenuItem x:Name="mi_componentTypes"
+                          Header="{Binding TextMenuitemComponentTypes, FallbackValue='Komponententypen'}"
+                          Click="mi_componentTypes_Click"/>
+                <Separator/>
+                <MenuItem x:Name="mi_testTypes"
+                          Header="{Binding TextMenuitemTestTypes, FallbackValue='Testarten'}"
+                          Click="mi_testTypes_Click"/>
+                <MenuItem x:Name="mi_testTypeProperties"
+                          Header="{Binding TextMenuitemTestTypeProperties, FallbackValue='Testart-Eigenschaften'}"
+                          Click="mi_testTypeProperties_Click"/>
+                <MenuItem x:Name="mi_inputMasks"
+                          Header="{Binding TextMenuitemInputMasks, FallbackValue='Erfassungsmasken'}"
+                          Click="mi_inputMasks_Click"/>
+                <Separator/>
+                <MenuItem x:Name="mi_dependencies"
+                          Header="{Binding TextMenuitemDependencies, FallbackValue='Abhängigkeiten'}"
+                          Click="mi_dependencies_Click"/>
+                <MenuItem x:Name="mi_nominalValues"
+                          Header="{Binding TextMenuitemNominalValues, FallbackValue='Sollwerte'}"
+                          Click="mi_nominalValues_Click"/>
+                <MenuItem x:Name="mi_formulas"
+                          Header="{Binding TextMenuitemFormulas, FallbackValue='Formeln'}"
+                          Click="mi_formulas_Click"/>
+                <MenuItem x:Name="mi_stepFunctions"
+                          Header="{Binding TextMenuitemStepFunctions, FallbackValue='Treppenfunktionen'}"
+                          Click="mi_stepFunctions_Click"/>
+                <Separator/>
+                <MenuItem x:Name="mi_documentation"
+                          Header="{Binding TextMenuitemDocumentation, FallbackValue='Dokumentation'}"
+                          Click="mi_documentation_Click"/>
+            </MenuItem>
+        </Menu>
+
+        <!--Panel for displaying the administration views-->
+        <DockPanel x:Name="pnl_viewpanel"
+                   Grid.Row="1"
+                   Grid.Column="0">
+            <TabControl x:Name="tab_maintab"/>
+        </DockPanel>
+    </Grid>
+</Window>
